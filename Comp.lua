@@ -1,6 +1,6 @@
 local plr = game.Players.LocalPlayer
 local TeamList = {{"NAVI",10186009648}}
-local PlayerNameList = {{1572447078,"3con","NAVI"},{1635709227,"Galaxy","NAVI"},{397984949,"Akuma","NAVI"},{145158047,"Dawid","NAVI"},{498435664,"diff","NAVI"},{2583235221,"fern","NAVI"},{2202955325,"BinMC","NAVI"},{378191085,"Bap","NAVI"},{2649959498,"Kite","NAVI"},{218402157,"tri","NAVI"}
+local PlayerNameList = {{1572447078,"3con","NAVI"},{1635709227,"Galaxy","NAVI"},{397984949,"Akuma","NAVI"},{145158047,"Dawid","NAVI"},{498435664,"diff","NAVI"},{2583235221,"fern","NAVI"},{2202955325,"BinMC","NAVI"},{378191085,"Bap","NAVI"},{2649959498,"Kite","NAVI"},{218402157,"tri","NAVI"}}
 local cn
 local function geticonid(TeamName)
 	for i,v in pairs(TeamList) do
