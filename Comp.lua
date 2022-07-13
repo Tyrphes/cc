@@ -1,5 +1,5 @@
 local plr = game.Players.LocalPlayer
-local TeamList = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/TeamName.json"))()
+local TeamList = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/TeamName.json"))
 local PlayerNameList =  game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/NamePlayer.json"))
 local cn
 local plr = game.Players.LocalPlayer
@@ -44,8 +44,12 @@ local function Nametag()
 	for i,v in pairs(game.Players:GetChildren()) do
 		if v ~= game.Players.LocalPlayer then
 
-			if v.Character and v.Character.Head and v.Character.Head.Nametag then
-				v.Character.Head.Nametag.Username.Text = v.Display.Value
+			if v.Character then
+				if v.Character:FindFirstChild("Head") then
+					if v.Character.Head:FindFirstChild("NameTag") then
+						v.Character.Head.Nametag.Username.Text = v.Display.Value
+					end
+				end
 			end
 		end
 	end
@@ -134,9 +138,9 @@ local function changeDeathName()
 	game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").time.Changed:Connect(function()
 		wait()
 		for i,v3 in pairs(game.Workspace:FindFirstChild("KillFeed"):GetChildren()) do
-			local getplrkiller = v3.Killer.Value
-			local getplrvictim = v3.Victim.Value
-			local getassit = v3.Assist
+			local getplrkiller = game.Players:FindFirstChild(v3.Killer.Value)
+			local getplrvictim = game.Players:FindFirstChild(v3.Victim.Value)
+			local getassit = game.Players:FindFirstChild(v3.Assist.Value)
 
 			if getassit then
 				for i,v1 in pairs(PlayerNameList) do
