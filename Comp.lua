@@ -1,7 +1,10 @@
 local plr = game.Players.LocalPlayer
-local TeamList = {{"NAVI",10186009648}}
-local PlayerNameList = {{1572447078,"3con","NAVI"},{1635709227,"Galaxy","NAVI"},{397984949,"Akuma","NAVI"},{145158047,"Dawid","NAVI"},{498435664,"diff","NAVI"},{2583235221,"fern","NAVI"},{2202955325,"BinMC","NAVI"},{378191085,"Bap","NAVI"},{2649959498,"Kite","NAVI"},{218402157,"tri","NAVI"}}
+local TeamList = loadstring(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/TeamName.lua"))()
+local PlayerNameList = loadstring(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/NamePlayer.lua"))
 local cn
+local plr = game.Players.LocalPlayer
+local Team1 = "NAVI"
+local Team2 = "Team Liquid"
 local function geticonid(TeamName)
 	for i,v in pairs(TeamList) do
 		if v[1] == TeamName then
@@ -9,63 +12,136 @@ local function geticonid(TeamName)
 		end
 	end
 end
-for i,v1 in pairs(PlayerNameList) do
-	if v1[1] == plr.UserId then
-		local Name = Instance.new("StringValue",plr)
-		Name.Name = "okokok"
-		Name.Value = v1[2]
+for i,v in pairs(game.Players:GetChildren()) do
+	for i,v1 in pairs(PlayerNameList) do
+		if v1[1] == v.UserId then
+			local Ins = Instance.new("StringValue",v)
+			Ins.Name = "Display"
+			Ins.Value = v1[2]
+		end
 	end
 end
-spawn(function()
-	plr.Status.Team.Changed:Connect(function()
-		for i,v1 in pairs(PlayerNameList) do
-			if v1[1] == plr.UserId then
-				if cn then
-					cn:Disconnect()
-				end
 
-				cn = plr.PlayerGui.GUI:FindFirstChild(plr.Status.Team.Value.."Win").Changed:Connect(function()
-					if plr.PlayerGui.GUI:FindFirstChild(plr.Status.Team.Value.."Win").Visible == true then
-						for i,v in pairs(plr.PlayerGui.GUI:FindFirstChild(plr.Status.Team.Value.."Win"):GetDescendants()) do
-							if v:IsA("TextLabel") then
-								for i,v1 in pairs(game.Players:GetChildren()) do
-									if string.find(v.Text,v1.Name)  then
-										local newst, rep = string.gsub(v.Text, v1.Name, "")
-										for i,v2 in pairs(PlayerNameList) do
-											if v2[1] == v1.UserId then
-												v.Text = v2[1]..newst
-											end
-										end
-									end
-								end
-							end
+local function CT_TWin()
+	local CT1 = game.Players.LocalPlayer.PlayerGui.GUI.CTWin
+	local T1 = game.Players.LocalPlayer.PlayerGui.GUI.TWin
+	CT1.Changed:Connect(function()
+		if CT1.Visible == true then
+			wait()
+			if plr.Status.Team.Value ~= "CT" then
+				CT1.Color.TextLabel.Text = Team1.." Win"
+			else
+				CT1.Color.TextLabel.Text = Team2.." Win"
+			end
+			for i,v in pairs(CT1:GetDescendants()) do
+				if v:IsA("TextLabel") then
+					for i,v1 in pairs(game.Players:GetChildren()) do
+						if string.find(tostring(v.Text),v1.Name) then
+							local newst, nc = string.gsub(v.Text,v1.Name,v1.Display.Value)
+							v.Text = newst
 						end
-
 					end
-				end)
+				end
 			end
 		end
-
 	end)
+	T1.Changed:Connect(function()
+		if T1.Visible == true then
+			wait()
+			if plr.Status.Team.Value ~= "T" then
+				T1.Color.TextLabel.Text = Team2.." Win"
+			else
+				T1.Color.TextLabel.Text = Team1.." Win"
+			end
+			for i,v in pairs(T1:GetDescendants()) do
+				if v:IsA("TextLabel") then
+					for i,v1 in pairs(game.Players:GetChildren()) do
+						if string.find(tostring(v.Text),v1.Name) then
+							local newst, nc = string.gsub(v.Text,v1.Name,v1.Display.Value)
+							v.Text = newst
+						end
+					end
+				end
+			end
+		end
+	end)
+end
+local function tabname()
+	plr.PlayerGui.GUI.Scoreboard.Changed:Connect(function()
+		for i,v in pairs(plr.PlayerGui.GUI.Scoreboard.T:GetChildren()) do
 
-end)
+			if v:IsA("Frame") then
+				local player = game.Players:FindFirstChild(v.Text) 
+				v.player.Text = player.Display.Value
+			end
+		end
+	end)
+end
+local function changeDeathName()
+	game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").time.Changed:Connect(function()
+		wait()
+		for i,v in pairs(game.Workspace:FindFirstChild("KillFeed"):GetChildren()) do
+			local getplrkiller = v.Killer.Value
+			local getplrvictim = v.Victim.Value
+			local getassit = v.Assist.Value
 
+			if getassit then
+				for i,v1 in pairs(PlayerNameList) do
 
-function changeSpectateName()
+					if v1[1] == getassit.UserId then
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Assist.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Assist.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+					end
+				end
+			end
+			if getplrkiller then
+				for i,v1 in pairs(PlayerNameList) do
+
+					if v1[1] == getplrkiller.UserId then
+						print(v1[2])
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
+					end
+				end
+			end
+			if getplrvictim then
+				for i,v1 in pairs(PlayerNameList) do
+					if v1[1] == getplrvictim.UserId then
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+						game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+					end
+				end
+			end
+		end
+	end)
+end
+local function changeSpectateName()
 	local RealIcon = plr.PlayerGui.GUI.Spectate.PlayerBox.PlayerIcon.Plr:Clone()
 	RealIcon.Name = "Plr1"
 	RealIcon.Visible = true
 	RealIcon.Size = UDim2.new(1,0,1,0)
 	RealIcon.Position = UDim2.new(0,0,0,0)
 	RealIcon.Parent = plr.PlayerGui.GUI.Spectate.PlayerBox.PlayerIcon
-	plr.PlayerGui.GUI.Spectate.PlayerBox.Visible = false
+	plr.PlayerGui.GUI.Spectate.PlayerBox.PlayerIcon.Plr.Visible = false
+	plr.PlayerGui.GUI.Spectate.PlayerBox.PlayerName.Visible = false
 	local Real =  plr.PlayerGui.GUI.Spectate.PlayerBox.PlayerName:Clone()
 	Real.Parent = plr.PlayerGui.GUI.Spectate.PlayerBox
 	Real.Name = "PlayerName1"
 	Real.Visible = true
 	plr.PlayerGui.GUI.Spectate.PlayerBox.PlayerPin.Visible = false
-	while plr.PlayerGui.GUI.Spectate.Visible == true do
-		wait()
+	while wait() do
 		local spectatingplr = game.Players:FindFirstChild(plr.PlayerGui.GUI.Spectate.Current.Value)
 		if spectatingplr then
 			for i,v in pairs(PlayerNameList) do
@@ -77,7 +153,6 @@ function changeSpectateName()
 					else
 						Real.TextColor3 = Color3.fromRGB(245, 205, 48)
 					end
-
 				end
 			end
 		else
@@ -85,44 +160,18 @@ function changeSpectateName()
 		end
 	end
 end
-function changeDeathName()
-	for i,v in pairs(game.Workspace.KillFeed:GetChildren()) do
-		v.time.Changed:Connect(function()
 
-			local getplrkiller = game.Players:FindFirstChild(v.Killer.Value)
-			local getplrvictim = game.Players:FindFirstChild(v.Victim.Value)
-			local getassit = game.Players:FindFirstChild(v.Assist)
-			if getassit then
-				for i,v1 in pairs(PlayerNameList) do
-
-					if v1[1] == getassit.UserId then
-						v.Assist.Value = v1[2]
-					end
-				end
-			end
-			if getplrkiller then
-				for i,v1 in pairs(PlayerNameList) do
-
-					if v1[1] == getplrkiller.UserId then
-
-						v.Killer.Value = v1[2]
-					end
-				end
-			end
-			if getplrvictim then
-				for i,v1 in pairs(PlayerNameList) do
-					if v1[1] == getplrvictim.UserId then
-						v.Victim.Value = v1[2]
-					end
-				end
-			end
-
-
-		end)
-	end
-end
 local anticheat = loadstring(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/newRAC/main/NEWRAC.lua"))()
-
+spawn(CT_TWin)
 spawn(changeSpectateName)
-
+spawn(tabname)
 spawn(changeDeathName)
+game.Players.PlayerAdded:Connect(function(v)
+	for i,v1 in pairs(PlayerNameList) do
+		if v1[1] == v.UserId then
+			local Ins = Instance.new("StringValue",v)
+			Ins.Name = "Display"
+			Ins.Value = v1[2]
+		end
+	end
+end)
