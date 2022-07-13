@@ -1,6 +1,6 @@
 local plr = game.Players.LocalPlayer
-local TeamList = loadstring(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/TeamName.lua"))()
-local PlayerNameList = loadstring(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/NamePlayer.lua"))
+local TeamList = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/TeamName.json"))
+local PlayerNameList = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/NamePlayer.json"))
 local cn
 local plr = game.Players.LocalPlayer
 local Team1 = "NAVI"
