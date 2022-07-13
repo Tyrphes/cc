@@ -1,17 +1,13 @@
 local plr = game.Players.LocalPlayer
-local TeamList = loadstring(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/TeamName.lua"))()
-local PlayerNameList = loadstring(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/NamePlayer.lua"))
+local TeamList = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/TeamName.json"))()
+local PlayerNameList =  game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Tyrphes/Name/main/NamePlayer.json"))
 local cn
 local plr = game.Players.LocalPlayer
 local Team1 = "NAVI"
 local Team2 = "Team Liquid"
 local plr = game.Players.LocalPlayer
-local TeamList = {{"NAVI",10186009648},{"Team Liquid",10199041211}}
-local PlayerNameList = {{151535041,"Arigato","NAVI"},{221605142,"co","Team Liquid"},{295441053,"Thao","NAVI"},{301335488,"Kiet","NAVI"},{781470027,"VoDanh","NAVI"},{1572447078,"3con","NAVI"},{1635709227,"Galaxy","NAVI"},{397984949,"Akuma","Team Liquid"},{145158047,"Dawid","NAVI"},{498435664,"diff","Team Liquid"},{2583235221,"fern","NAVI"},{2202955325,"BinMC","NAVI"},{378191085,"Bap","NAVI"},{2649959498,"Kite","NAVI"},{218402157,"tri","NAVI"}}
 local cn
-local plr = game.Players.LocalPlayer
-local Team1 = "NAVI"
-local Team2 = "Team Liquid"
+
 
 local function geticonid(TeamName)
 	for i,v in pairs(TeamList) do
@@ -30,7 +26,20 @@ for i,v in pairs(game.Players:GetChildren()) do
 	end
 end
 
-
+local function changeText()
+	while wait() do
+		for i,v in pairs(game.Players.LocalPlayer.PlayerGui.GUI:GetDescendants()) do
+			if v:IsA("TextLabel") then
+				for i,v1 in pairs(game.Players:GetChildren()) do
+					if string.find(v.Text,v1.Name) then
+						local newst, cc = string.gsub(v.Text,v1.Name,v1.Display.Value)
+						v.Text = newst
+					end
+				end
+			end
+		end
+	end
+end
 local function Nametag()
 	for i,v in pairs(game.Players:GetChildren()) do
 		if v ~= game.Players.LocalPlayer then
@@ -45,7 +54,7 @@ local function CT_TWin()
 	local CT1 = game.Players.LocalPlayer.PlayerGui.GUI.CTWin
 	local T1 = game.Players.LocalPlayer.PlayerGui.GUI.TWin
 	CT1.Changed:Connect(function()
-		
+
 		if CT1.Visible == true then
 			wait()
 			if plr.Status.Team.Value ~= "CT" then
@@ -124,51 +133,52 @@ end
 local function changeDeathName()
 	game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").time.Changed:Connect(function()
 		wait()
-		local getplrkiller = game.Players:FindFirstChild(game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value)
-		local getplrvictim = game.Players:FindFirstChild(game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value)
-		local getassit = game.Players:FindFirstChild(game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Assist)
+		for i,v3 in pairs(game.Workspace:FindFirstChild("KillFeed"):GetChildren()) do
+			local getplrkiller = v3.Killer.Value
+			local getplrvictim = v3.Victim.Value
+			local getassit = v3.Assist
 
-		if getassit then
-			for i,v1 in pairs(PlayerNameList) do
+			if getassit then
+				for i,v1 in pairs(PlayerNameList) do
 
-				if v1[1] == getassit.UserId then
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Assist.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Assist.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+					if v1[1] == getassit.UserId then
+						v3.Victim.Value = v1[2]
+						v3.Assist.Value = v1[2]
+						v3.Victim.Value = v1[2]
+						v3.Victim.Value = v1[2]
+						v3.Assist.Value = v1[2]
+						v3.Victim.Value = v1[2]
+					end
 				end
 			end
-		end
-		if getplrkiller then
-			for i,v1 in pairs(PlayerNameList) do
+			if getplrkiller then
+				for i,v1 in pairs(PlayerNameList) do
 
-				if v1[1] == getplrkiller.UserId then
-					print(v1[2])
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Killer.Value = v1[2]
+					if v1[1] == getplrkiller.UserId then
+
+						v3.Killer.Value = v1[2]
+						v3.Killer.Value = v1[2]
+						v3.Killer.Value = v1[2]
+						v3.Killer.Value = v1[2]
+						v3.Killer.Value = v1[2]
+						v3.Killer.Value = v1[2]
+					end
 				end
 			end
-		end
-		if getplrvictim then
-			for i,v1 in pairs(PlayerNameList) do
-				if v1[1] == getplrvictim.UserId then
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
-					game.Workspace:FindFirstChild("KillFeed"):FindFirstChild("10").Victim.Value = v1[2]
+			if getplrvictim then
+				for i,v1 in pairs(PlayerNameList) do
+					if v1[1] == getplrvictim.UserId then
+						v3.Victim.Value = v1[2]
+						v3.Victim.Value = v1[2]
+						v3.Victim.Value = v1[2]
+						v3.Victim.Value = v1[2]
+						v3.Victim.Value = v1[2]
+						v3.Victim.Value = v1[2]
+					end
 				end
 			end
+
 		end
-
-
 
 	end)
 
